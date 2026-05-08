@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting Started — SERVMIND Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="../index.html" class="nav-logo"><span class="glyph"></span><span>SERVMIND</span></a>
+  <div class="nav-links">
+    <a href="../index.html#services">Services</a>
+    <a href="../index.html#products">Products</a>
+    <a href="../blog.html">Blog</a>
+    <a href="index.html" class="active">Docs</a>
+    <a href="../index.html#contact">Contact</a>
+  </div>
+  <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>
+  </button>
+  <a href="../index.html#contact" class="btn btn-primary">Talk to us</a>
+</nav>
+
+<div class="docs-shell">
+  <div class="container">
+    <div class="docs-tabs">
+      <a href="index.html"><span class="ico">⌂</span> Home</a>
+      <a href="getting-started.html" class="active">Getting Started</a>
+      <a href="mindportalix.html">MindPortalix</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="contribute.html">Contribute</a>
+    </div>
+
+    <div class="docs-grid">
+      <aside class="docs-side">
+        <div class="group">
+          <div class="group-title">Getting Started</div>
+          <ul>
+            <li><a href="#" class="active">Quick start</a></li>
+            <li><a href="#prerequisites">Prerequisites</a></li>
+            <li><a href="#install-the-extension">Install the extension</a></li>
+            <li><a href="#create-your-first-workflow">First workflow</a></li>
+            <li><a href="#trigger-your-first-check">Trigger a check</a></li>
+          </ul>
+        </div>
+        <div class="group">
+          <div class="group-title">Concepts</div>
+          <ul>
+            <li><a href="mindportalix.html">Workflows &amp; agents</a></li>
+            <li><a href="mindportalix.html#mcp-servers">MCP servers</a></li>
+            <li><a href="mindportalix.html#policy-controls">Policy controls</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="docs-main">
+        <div class="docs-head">
+          <h1>Quick start</h1>
+          <button class="docs-ask"><span class="icn"></span> Ask the docs</button>
+        </div>
+
+        <div class="md" id="md-out"></div>
+
+        <script type="text/markdown" id="md-source">
+Get a working MindPortalix install — from zero to your first agent reply — in under five minutes.
+
+> **What you'll do:** install the VS Code extension, point it at a fresh workspace, drop in one workflow file, then make a tiny commit and watch the agent thread appear in the editor.
+
+## Prerequisites
+
+You'll need:
+
+- **VS Code 1.85+** or **Cursor**.
+- **Git**, set up locally.
+- A **SERVMIND account** — sign up at `app.servmind.io`.
+- One repository you have push access to (a sandbox repo is fine).
+
+## Install the extension
+
+Install the **MindPortalix** extension from the Visual Studio Marketplace.
+
+```bash
+code --install-extension servmind.mindportalix
+```
+
+Once installed, you'll see the small **▸ portal** icon in the status bar. Click it and sign in with your SERVMIND account.
+
+<div class="callout"><div class="icn">i</div><div><strong>Heads up.</strong> The extension only reads diffs of changes you commit. Full repo access is opt-in per workspace.</div></div>
+
+## Create your first workflow
+
+Workflows are how domain experts teach MindPortalix what good looks like. They're plain Markdown files committed to a `workflows/` folder in your repo.
+
+Create `workflows/code-review.md`:
+
+```md
+---
+name: Code review baseline
+applies_to: ["**/*.ts", "**/*.tsx"]
+severity: advisory
+---
+
+# Code review baseline
+
+When reviewing a TypeScript change, prefer:
+
+- Strong, narrow types over `any`.
+- Explicit error handling — never silently swallow.
+- One reason to change per pull request.
+
+If a change touches `payments/**`, also enforce the rules in
+`workflows/payments-runbook.md`.
+```
+
+Push the file. The portal picks it up within seconds.
+
+## Trigger your first check
+
+Make any small commit on a tracked file:
+
+```bash
+git commit -am "chore: tweak retry logic"
+```
+
+Within a few seconds, the **MindPortalix** panel pops open in VS Code with a thread of feedback signals — each one linked back to the workflow that produced it.
+
+That's it. You're up and running. Next, dig into the **[MindPortalix manual](mindportalix.html)** to learn about agents, MCP, and policy controls.
+        </script>
+
+        <div class="docs-footer">
+          <span>Edit on GitHub · pages/getting-started.md</span>
+          <div class="helpful"><span>Was this helpful?</span><button>☺</button><button>◎</button><button>☹</button></div>
+        </div>
+      </main>
+
+      <aside class="docs-toc">
+        <div class="docs-toc-title">▸ On this page</div>
+        <ul id="docs-toc-list"></ul>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script src="../theme.js"></script>
+<script src="docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integrations — SERVMIND Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="../index.html" class="nav-logo"><span class="glyph"></span><span>SERVMIND</span></a>
+  <div class="nav-links">
+    <a href="../index.html#services">Services</a>
+    <a href="../index.html#products">Products</a>
+    <a href="../blog.html">Blog</a>
+    <a href="index.html" class="active">Docs</a>
+    <a href="../index.html#contact">Contact</a>
+  </div>
+  <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>
+  </button>
+  <a href="../index.html#contact" class="btn btn-primary">Talk to us</a>
+</nav>
+
+<div class="docs-shell">
+  <div class="container">
+    <div class="docs-tabs">
+      <a href="index.html"><span class="ico">⌂</span> Home</a>
+      <a href="getting-started.html">Getting Started</a>
+      <a href="mindportalix.html">MindPortalix</a>
+      <a href="integrations.html" class="active">Integrations</a>
+      <a href="contribute.html">Contribute</a>
+    </div>
+
+    <div class="docs-grid">
+      <aside class="docs-side">
+        <div class="group">
+          <div class="group-title">Editor</div>
+          <ul>
+            <li><a href="#" class="active">Overview</a></li>
+            <li><a href="#vs-code">VS Code</a></li>
+            <li><a href="#cursor">Cursor</a></li>
+          </ul>
+        </div>
+        <div class="group">
+          <div class="group-title">Source &amp; CI</div>
+          <ul>
+            <li><a href="#github">GitHub</a></li>
+            <li><a href="#gitlab">GitLab</a></li>
+            <li><a href="#ci-cd">CI / CD</a></li>
+          </ul>
+        </div>
+        <div class="group">
+          <div class="group-title">Knowledge &amp; tools</div>
+          <ul>
+            <li><a href="#mcp">MCP servers</a></li>
+            <li><a href="#notion">Notion / Confluence</a></li>
+            <li><a href="#linear">Linear / Jira</a></li>
+            <li><a href="#slack">Slack</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="docs-main">
+        <div class="docs-head">
+          <h1>Integrations overview</h1>
+          <button class="docs-ask"><span class="icn"></span> Ask the docs</button>
+        </div>
+
+        <div class="md" id="md-out"></div>
+
+        <script type="text/markdown" id="md-source">
+MindPortalix uses a small, opinionated set of integrations to meet your team where they already work — the editor, the SCM, the docs, the chat. Below is a comprehensive list of what's supported today and what's on the roadmap.
+
+> **Build your own.** Anything you can expose over the **Model Context Protocol** can become an integration. See [MCP servers](#mcp).
+
+## VS Code
+
+The flagship surface. Features:
+
+- Inline diagnostics and hover cards on changed lines.
+- A side-panel agent thread per change.
+- Codelens actions to apply suggested fixes.
+- Status-bar indicator with run count and connection state.
+
+```bash
+code --install-extension servmind.mindportalix
+```
+
+## Cursor
+
+Cursor uses the same extension build as VS Code — install from the same marketplace. Cursor's inline-edit surface is supported as a feedback target as of v1.4.
+
+## GitHub
+
+Connect a GitHub org and MindPortalix can:
+
+- React to **commits**, **branch creates**, and **PR merges**.
+- Post agent feedback as a checklist on the PR.
+- Optionally run as a required check.
+
+## GitLab
+
+GitLab support mirrors GitHub. Webhook setup is documented in `docs/integrations/gitlab.md`.
+
+## CI / CD
+
+A standalone CLI lets you wire MindPortalix into any CI provider:
+
+```bash
+npx @servmind/mp check --diff $CI_DIFF --workspace my-team
+```
+
+Exit codes match your configured **policy mode** (advisory / request-review / gate).
+
+## MCP servers
+
+Any MCP server can become a tool an agent can call mid-review. Common patterns:
+
+| Server type         | Examples                                |
+| ------------------- | --------------------------------------- |
+| Internal docs       | Notion, Confluence, custom wikis        |
+| Schema registry     | Buf, Apicurio, internal                 |
+| Ticketing           | Linear, Jira, GitHub Issues             |
+| Observability       | Datadog, Honeycomb, Sentry              |
+| Custom APIs         | Anything you can wrap in MCP            |
+
+```bash
+mp mcp add my-tool https://mcp.internal/my-tool --workspace team
+```
+
+## Notion / Confluence
+
+Read-only. Useful as a reference source for **reference agents** — the agent ingests pages on demand and cites them in feedback.
+
+## Linear / Jira
+
+MindPortalix can post a follow-up ticket when an agent flags a `gate`-level signal that the developer dismissed. Optional, off by default.
+
+## Slack
+
+Subscribe a channel to weekly digest reports per repo or per workspace. Useful for staff engineers and domain leads who want a pulse without watching the editor.
+        </script>
+
+        <div class="docs-footer">
+          <span>Edit on GitHub · pages/integrations.md</span>
+          <div class="helpful"><span>Was this helpful?</span><button>☺</button><button>◎</button><button>☹</button></div>
+        </div>
+      </main>
+
+      <aside class="docs-toc">
+        <div class="docs-toc-title">▸ On this page</div>
+        <ul id="docs-toc-list"></ul>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script src="../theme.js"></script>
+<script src="docs.js"></script>
+</body>
+</html>

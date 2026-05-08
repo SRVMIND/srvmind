@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SERVMIND Technologies — Software Systems & AI Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ===== Home page specific ===== */
+.hero {
+  min-height: 100vh;
+  padding: 140px 0 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.hero-orb {
+  position: absolute;
+  top: 50%;
+  right: -180px;
+  transform: translateY(-50%);
+  width: 720px;
+  height: 720px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(92,242,255,0.6), transparent 50%),
+    radial-gradient(circle at 65% 65%, rgba(181,107,255,0.6), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255,92,224,0.3), transparent 70%);
+  filter: blur(60px);
+  opacity: 0.55;
+  pointer-events: none;
+  animation: drift 18s ease-in-out infinite;
+}
+@keyframes drift {
+  0%, 100% { transform: translateY(-50%) translateX(0) scale(1); }
+  50% { transform: translateY(-48%) translateX(-30px) scale(1.05); }
+}
+
+.hero-orb-ring {
+  position: absolute;
+  top: 50%;
+  right: -50px;
+  transform: translateY(-50%);
+  width: 540px;
+  height: 540px;
+  pointer-events: none;
+}
+.hero-orb-ring svg { width: 100%; height: 100%; animation: spin 60s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px 6px 6px;
+  background: rgba(14, 18, 36, 0.7);
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  margin-bottom: 36px;
+}
+.hero-eyebrow .badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--grad-1);
+  color: #05060d;
+  font-weight: 600;
+}
+
+.hero h1 { max-width: 1000px; }
+.hero h1 .grad {
+  background: var(--grad-1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero h1 .glyph-cluster {
+  display: inline-flex;
+  gap: 6px;
+  vertical-align: middle;
+  margin: 0 12px;
+  transform: translateY(-4px);
+}
+.hero h1 .glyph-cluster span {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+  opacity: 0.4;
+  animation: blink 1.4s ease-in-out infinite;
+}
+.hero h1 .glyph-cluster span:nth-child(2) { animation-delay: 0.2s; background: var(--violet); box-shadow: 0 0 10px var(--violet); }
+.hero h1 .glyph-cluster span:nth-child(3) { animation-delay: 0.4s; background: var(--magenta); box-shadow: 0 0 10px var(--magenta); }
+@keyframes blink { 0%,100% { opacity: 0.3 } 50% { opacity: 1 } }
+
+.hero-sub {
+  margin-top: 32px;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--fg-dim);
+  max-width: 640px;
+}
+
+.hero-cta {
+  margin-top: 48px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.hero-cta .signal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 8px;
+  color: var(--fg-mute);
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.hero-cta .signal .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 8px var(--lime); animation: pulse 2s infinite; }
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin-top: 96px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: rgba(14, 18, 36, 0.4);
+}
+.hero-stat {
+  padding: 24px 28px;
+  border-right: 1px solid var(--line);
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat .v {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  background: var(--grad-1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-stat .l { font-size: 12px; color: var(--fg-mute); margin-top: 6px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.12em; }
+
+/* ===== Marquee ===== */
+.marquee {
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.marquee-track {
+  display: flex;
+  gap: 80px;
+  width: max-content;
+  animation: scroll 40s linear infinite;
+  align-items: center;
+}
+@keyframes scroll { to { transform: translateX(-50%); } }
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--fg-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+}
+.marquee-item::after {
+  content: "";
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--fg-mute);
+}
+
+/* ===== Services ===== */
+.services-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 40px;
+  margin-bottom: 56px;
+}
+.services-head p { color: var(--fg-dim); max-width: 420px; }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.service {
+  position: relative;
+  padding: 32px;
+  background: linear-gradient(180deg, rgba(20,26,49,0.7) 0%, rgba(14,18,36,0.7) 100%);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.service:hover {
+  transform: translateY(-4px);
+  border-color: var(--cyan);
+  box-shadow: var(--shadow-cyan);
+}
+.service .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--fg-mute);
+  letter-spacing: 0.2em;
+}
+.service h3 { margin-top: 24px; max-width: 280px; }
+.service p { color: var(--fg-dim); font-size: 14px; margin-top: 12px; }
+.service .icon {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(92,242,255,0.06);
+  border: 1px solid var(--line-2);
+  display: grid;
+  place-items: center;
+  transition: all 0.3s;
+}
+.service:hover .icon { background: rgba(92,242,255,0.12); border-color: var(--cyan); }
+.service .icon svg { width: 26px; height: 26px; stroke: var(--cyan); fill: none; stroke-width: 1.5; }
+.service.violet .icon svg { stroke: var(--violet); }
+.service.violet:hover { border-color: var(--violet); box-shadow: var(--shadow-violet); }
+.service.violet .icon { background: rgba(181,107,255,0.06); }
+.service.violet:hover .icon { background: rgba(181,107,255,0.12); border-color: var(--violet); }
+.service.magenta .icon svg { stroke: var(--magenta); }
+.service.magenta:hover { border-color: var(--magenta); box-shadow: 0 0 40px rgba(255,92,224,0.25); }
+.service.magenta .icon { background: rgba(255,92,224,0.06); }
+.service.magenta:hover .icon { background: rgba(255,92,224,0.12); border-color: var(--magenta); }
+
+.service .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 20px; }
+.service .tags span {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--fg-dim);
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+}
+
+.service .arrow {
+  align-self: flex-end;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  display: grid;
+  place-items: center;
+  transition: all 0.3s;
+}
+.service:hover .arrow { background: var(--fg); color: var(--bg); transform: rotate(-45deg); }
+
+/* ===== Featured product (MindPortalix) ===== */
+.feature-product {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  padding: 64px;
+  background: linear-gradient(135deg, rgba(20,26,49,0.8), rgba(10,13,28,0.8));
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-xl);
+  position: relative;
+  overflow: hidden;
+}
+.feature-product::before {
+  content: "";
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(181,107,255,0.3), transparent 60%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+.feature-product .label {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(181,107,255,0.12);
+  border: 1px solid rgba(181,107,255,0.3);
+  border-radius: 6px;
+  color: var(--violet);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.feature-product h2 { margin-bottom: 16px; }
+.feature-product h2 .grad { background: var(--grad-2); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.feature-product p { color: var(--fg-dim); margin-bottom: 28px; max-width: 480px; }
+
+.feature-product-vis {
+  position: relative;
+  height: 380px;
+  background: rgba(5, 6, 13, 0.6);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+/* The animated "bridge" diagram */
+.bridge {
+  position: absolute;
+  inset: 0;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.bridge-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.bridge-node {
+  flex: 1;
+  padding: 14px 16px;
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  background: rgba(14,18,36,0.8);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.bridge-node .nd {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--cyan); box-shadow: 0 0 8px var(--cyan);
+}
+.bridge-node.violet .nd { background: var(--violet); box-shadow: 0 0 8px var(--violet); }
+.bridge-node.dim { color: var(--fg-dim); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+.bridge-mid {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--grad-2);
+  color: #05060d;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: var(--shadow-violet);
+  position: relative;
+}
+.bridge-mid::before, .bridge-mid::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--violet));
+}
+.bridge-mid::before { right: 100%; }
+.bridge-mid::after { left: 100%; background: linear-gradient(90deg, var(--violet), transparent); }
+
+.bridge-flow {
+  flex: 1;
+  position: relative;
+  height: 80px;
+  border: 1px dashed var(--line-2);
+  border-radius: 12px;
+  background: rgba(14,18,36,0.4);
+  overflow: hidden;
+}
+.bridge-flow .pulse {
+  position: absolute;
+  top: 50%; left: -10px;
+  transform: translateY(-50%);
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan);
+  animation: travel 2.5s linear infinite;
+}
+.bridge-flow .pulse.v { background: var(--violet); box-shadow: 0 0 12px var(--violet); animation-delay: 1.25s; }
+@keyframes travel { 0% { left: -10px; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { left: calc(100% + 10px); opacity: 0; } }
+
+.bridge-flow .axis {
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--violet), transparent);
+  opacity: 0.4;
+}
+.bridge-flow .label {
+  position: absolute;
+  top: 8px; left: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--fg-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.bridge-flow .label.right { left: auto; right: 12px; bottom: 8px; top: auto; }
+
+/* ===== Approach (process) ===== */
+.approach-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+.approach-cell {
+  background: var(--bg-2);
+  padding: 32px 28px;
+  min-height: 220px;
+  position: relative;
+  transition: background 0.3s;
+}
+.approach-cell:hover { background: rgba(20,26,49,0.9); }
+.approach-cell .step {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: 0.2em;
+  margin-bottom: 16px;
+}
+.approach-cell h3 { font-size: 22px; margin-bottom: 12px; }
+.approach-cell p { color: var(--fg-dim); font-size: 14px; }
+
+/* ===== Big CTA ===== */
+.bigcta {
+  padding: 80px;
+  border-radius: var(--r-xl);
+  background:
+    radial-gradient(800px 500px at 20% 20%, rgba(92,242,255,0.18), transparent 60%),
+    radial-gradient(800px 500px at 80% 80%, rgba(181,107,255,0.18), transparent 60%),
+    linear-gradient(135deg, #0a0d1c, #141a31);
+  border: 1px solid var(--line-2);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.bigcta h2 { max-width: 720px; margin: 0 auto 24px; }
+.bigcta p { color: var(--fg-dim); max-width: 540px; margin: 0 auto 40px; }
+.bigcta .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+@media (max-width: 980px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .hero-stat:nth-child(2) { border-right: none; }
+  .services-grid { grid-template-columns: 1fr; }
+  .feature-product { grid-template-columns: 1fr; padding: 32px; }
+  .approach-grid { grid-template-columns: 1fr 1fr; }
+  .bigcta { padding: 48px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <span class="glyph"></span>
+    <span>SERVMIND</span>
+  </a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#products">Products</a>
+    <a href="#approach">Approach</a>
+    <a href="blog.html">Blog</a>
+    <a href="docs/index.html">Docs</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>
+  </button>
+  <a href="#contact" class="btn btn-primary">Start a project</a>
+</nav>
+<script src="theme.js"></script>
+
+<!-- ============ HERO ============ -->
+<section class="hero" data-screen-label="01 Hero">
+  <div class="hero-orb"></div>
+  <div class="hero-orb-ring">
+    <svg viewBox="0 0 540 540">
+      <circle cx="270" cy="270" r="180" fill="none" stroke="rgba(92,242,255,0.25)" stroke-dasharray="2 6"/>
+      <circle cx="270" cy="270" r="240" fill="none" stroke="rgba(181,107,255,0.18)" stroke-dasharray="1 8"/>
+      <circle cx="270" cy="270" r="120" fill="none" stroke="rgba(255,92,224,0.18)"/>
+      <circle cx="450" cy="270" r="4" fill="#5cf2ff"/>
+      <circle cx="270" cy="30" r="3" fill="#b56bff"/>
+      <circle cx="150" cy="420" r="3" fill="#ff5ce0"/>
+    </svg>
+  </div>
+
+  <div class="container">
+    <div class="hero-eyebrow fade-in">
+      <span class="badge">v2026.05</span>
+      <span>Software systems · AI agents · Domain workflows</span>
+    </div>
+
+    <h1 class="fade-in">
+      Bridge the gap<br>
+      between <span class="grad">domain experts</span>
+      <span class="glyph-cluster"><span></span><span></span><span></span></span>
+      and the<br>
+      software they ship.
+    </h1>
+
+    <p class="hero-sub fade-in">
+      SERVMIND builds software systems and AI agents that translate deep domain
+      expertise into the daily flow of engineering teams — so what gets shipped
+      reflects what experts actually meant.
+    </p>
+
+    <div class="hero-cta fade-in">
+      <a href="mindportalix.html" class="btn btn-grad">
+        Explore MindPortalix
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#services" class="btn btn-ghost">Our services</a>
+      <span class="signal"><span class="dot"></span> 3 systems online · agents.servmind.io</span>
+    </div>
+
+    <div class="hero-stats fade-in">
+      <div class="hero-stat"><div class="v">12+</div><div class="l">Years building</div></div>
+      <div class="hero-stat"><div class="v">42</div><div class="l">Production agents</div></div>
+      <div class="hero-stat"><div class="v">98.4%</div><div class="l">Alignment rate</div></div>
+      <div class="hero-stat"><div class="v">3</div><div class="l">Active products</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Marquee ============ -->
+<div class="marquee">
+  <div class="marquee-track">
+    <div class="marquee-item">VS Code Extensions</div>
+    <div class="marquee-item">Multi-agent orchestration</div>
+    <div class="marquee-item">Domain workflow capture</div>
+    <div class="marquee-item">RAG pipelines</div>
+    <div class="marquee-item">MCP integrations</div>
+    <div class="marquee-item">Custom LLM tooling</div>
+    <div class="marquee-item">Internal platforms</div>
+    <div class="marquee-item">Data systems</div>
+    <!-- duplicate -->
+    <div class="marquee-item">VS Code Extensions</div>
+    <div class="marquee-item">Multi-agent orchestration</div>
+    <div class="marquee-item">Domain workflow capture</div>
+    <div class="marquee-item">RAG pipelines</div>
+    <div class="marquee-item">MCP integrations</div>
+    <div class="marquee-item">Custom LLM tooling</div>
+    <div class="marquee-item">Internal platforms</div>
+    <div class="marquee-item">Data systems</div>
+  </div>
+</div>
+
+<!-- ============ Services ============ -->
+<section id="services" data-screen-label="02 Services">
+  <div class="container">
+    <div class="services-head fade-in">
+      <div>
+        <span class="section-tag"><span class="dot"></span> What we do</span>
+        <h2>Software systems<br>and AI, engineered<br>around your domain.</h2>
+      </div>
+      <p>We work with companies and individual operators who hold deep, hard-won expertise — and want their software to carry that expertise forward, instead of fighting against it.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service fade-in">
+        <div class="num">01 / Software systems</div>
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        </div>
+        <div>
+          <h3>Custom internal platforms and SaaS products</h3>
+          <p>From idea to a system your team relies on every day. Architectures we can defend, code we can iterate on safely.</p>
+          <div class="tags"><span>Web · iOS · Android</span><span>TypeScript</span><span>Postgres</span></div>
+        </div>
+        <div class="arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <div class="service violet fade-in">
+        <div class="num">02 / AI solutions</div>
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg>
+        </div>
+        <div>
+          <h3>Agents, copilots and RAG systems wired to your workflows</h3>
+          <p>We design AI that actually understands the way your business works — not generic chat layers bolted on top.</p>
+          <div class="tags"><span>Multi-agent</span><span>MCP</span><span>RAG · Eval</span></div>
+        </div>
+        <div class="arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <div class="service magenta fade-in">
+        <div class="num">03 / Workflow integration</div>
+        <div class="icon">
+          <svg viewBox="0 0 24 24"><path d="M4 7h6l2 3 2-3h6M4 12h16M4 17h6l2 3 2-3h6"/></svg>
+        </div>
+        <div>
+          <h3>Bring expert knowledge into the engineering loop</h3>
+          <p>VS Code extensions, CI checks, design reviews, runbooks — places where the team already lives. We meet them there.</p>
+          <div class="tags"><span>VS Code · Cursor</span><span>GitHub</span><span>CI / CD</span></div>
+        </div>
+        <div class="arrow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Featured product ============ -->
+<section id="products" data-screen-label="03 Products">
+  <div class="container">
+    <div class="fade-in" style="margin-bottom:40px;">
+      <span class="section-tag"><span class="dot"></span> Featured product</span>
+      <h2>Our products</h2>
+    </div>
+
+    <div class="feature-product fade-in">
+      <div>
+        <span class="label">MindPortalix</span>
+        <h2>The <span class="grad">portal</span> between<br>experts and engineers.</h2>
+        <p>Every commit, branch, and merge a developer makes is read by domain-aware AI agents that compare what changed against your team's documented best practices, runbooks and references — and surface aligned, contextual feedback right inside the editor.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="mindportalix.html" class="btn btn-grad">Open product page →</a>
+          <a href="mindportalix.html#video" class="btn btn-ghost">▶ Watch demo</a>
+        </div>
+      </div>
+
+      <div class="feature-product-vis">
+        <div class="bridge">
+          <div class="bridge-row">
+            <div class="bridge-node"><span class="nd"></span> Developer · VS Code</div>
+            <div class="bridge-flow">
+              <div class="label">commit · merge</div>
+              <div class="axis"></div>
+              <div class="pulse"></div>
+              <div class="label right">feedback</div>
+              <div class="pulse v" style="top:auto;bottom:50%;transform:translateY(50%);"></div>
+            </div>
+          </div>
+          <div class="bridge-row" style="justify-content:center;">
+            <div class="bridge-mid">MindPortalix · AI Agents</div>
+          </div>
+          <div class="bridge-row">
+            <div class="bridge-node violet"><span class="nd"></span> Domain expert · workflows · MCP · files</div>
+          </div>
+          <div class="bridge-row" style="margin-top:auto;">
+            <div class="bridge-node dim">▸ /agent/check  alignment=0.94  rules=12  ok</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Approach ============ -->
+<section id="approach" data-screen-label="04 Approach">
+  <div class="container">
+    <div class="services-head fade-in">
+      <div>
+        <span class="section-tag"><span class="dot"></span> How we work</span>
+        <h2>An approach that<br>respects what you already know.</h2>
+      </div>
+      <p>We don't replace your expertise with a model. We build the connective tissue that carries it through every layer of the stack.</p>
+    </div>
+
+    <div class="approach-grid fade-in">
+      <div class="approach-cell">
+        <div class="step">STEP 01 / DISCOVER</div>
+        <h3>Capture the way your domain actually thinks.</h3>
+        <p>Workflows, edge cases, vocabulary, the unwritten rules. We sit with the people who do the work.</p>
+      </div>
+      <div class="approach-cell">
+        <div class="step">STEP 02 / DESIGN</div>
+        <h3>Architect a system that holds that knowledge.</h3>
+        <p>Resources, MCP servers, evaluation suites, agent graphs, UI surfaces — chosen to fit the way you operate.</p>
+      </div>
+      <div class="approach-cell">
+        <div class="step">STEP 03 / SHIP</div>
+        <h3>Wire it into the tools your team uses.</h3>
+        <p>VS Code, GitHub, Slack, your dashboards. The experience meets engineers where they already are.</p>
+      </div>
+      <div class="approach-cell">
+        <div class="step">STEP 04 / EVOLVE</div>
+        <h3>Keep it aligned as everything changes.</h3>
+        <p>Continuous evaluation, prompt + workflow versioning, regression checks. Quality stays measurable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Big CTA ============ -->
+<section id="contact" data-screen-label="05 Contact">
+  <div class="container">
+    <div class="bigcta fade-in">
+      <span class="section-tag"><span class="dot"></span> Let's build</span>
+      <h2>Have a system in mind?<br>We probably already love it.</h2>
+      <p>Tell us about your team, your domain, and what currently slips between the experts and the engineers. We'll come back with a plan within a week.</p>
+      <div class="cta-row">
+        <a href="mailto:hello@servmind.io" class="btn btn-grad">hello@servmind.io →</a>
+        <a href="mindportalix.html" class="btn btn-ghost">Or start with MindPortalix</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="nav-logo" style="margin-bottom:14px;display:inline-flex;">
+          <span class="glyph"></span>
+          <span>SERVMIND TECHNOLOGIES</span>
+        </a>
+        <p style="color:var(--fg-dim); max-width:360px; margin-top:8px; font-size:14px;">
+          Building software systems and AI agents that carry domain expertise into engineering — without losing it in translation.
+        </p>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li><a href="mindportalix.html">MindPortalix</a></li>
+          <li><a href="#">SignalDesk <span class="kbd">soon</span></a></li>
+          <li><a href="#">FieldLoop <span class="kbd">soon</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#approach">Approach</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:hello@servmind.io">hello@servmind.io</a></li>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 SERVMIND TECHNOLOGIES · All systems operational.</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;">build · 2026.05.08</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== Reveal on scroll =====
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+fadeEls.forEach(el => observer.observe(el));
+// Fallback: ensure everything reveals even if observer doesn't fire
+setTimeout(() => fadeEls.forEach(el => el.classList.add('visible')), 250);
+
+// ===== Cursor parallax on hero orb =====
+const orb = document.querySelector('.hero-orb');
+const ring = document.querySelector('.hero-orb-ring');
+window.addEventListener('mousemove', (e) => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 30;
+  const y = (e.clientY / window.innerHeight - 0.5) * 30;
+  if (orb) orb.style.transform = `translateY(-50%) translate(${-x}px, ${-y}px)`;
+  if (ring) ring.style.transform = `translateY(-50%) translate(${x*0.5}px, ${y*0.5}px)`;
+});
+</script>
+
+</body>
+</html>

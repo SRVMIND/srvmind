@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contribute — SERVMIND Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="../index.html" class="nav-logo"><span class="glyph"></span><span>SERVMIND</span></a>
+  <div class="nav-links">
+    <a href="../index.html#services">Services</a>
+    <a href="../index.html#products">Products</a>
+    <a href="../blog.html">Blog</a>
+    <a href="index.html" class="active">Docs</a>
+    <a href="../index.html#contact">Contact</a>
+  </div>
+  <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>
+  </button>
+  <a href="#" class="btn btn-primary">Open repo →</a>
+</nav>
+
+<div class="docs-shell">
+  <div class="container">
+    <div class="docs-tabs">
+      <a href="index.html"><span class="ico">⌂</span> Home</a>
+      <a href="getting-started.html">Getting Started</a>
+      <a href="mindportalix.html">MindPortalix</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="contribute.html" class="active">Contribute</a>
+    </div>
+
+    <div class="docs-grid">
+      <aside class="docs-side">
+        <div class="group">
+          <div class="group-title">Contribute</div>
+          <ul>
+            <li><a href="#" class="active">Ways to contribute</a></li>
+            <li><a href="#submitting-a-pr">Submitting a PR</a></li>
+            <li><a href="#writing-workflows">Writing workflows</a></li>
+            <li><a href="#building-an-mcp-server">Building an MCP server</a></li>
+            <li><a href="#code-of-conduct">Code of conduct</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="docs-main">
+        <div class="docs-head">
+          <h1>Ways to contribute</h1>
+          <button class="docs-ask"><span class="icn"></span> Ask the docs</button>
+        </div>
+
+        <div class="md" id="md-out"></div>
+
+        <script type="text/markdown" id="md-source">
+SERVMIND is built in the open. There are many ways to help — not all of them require writing code.
+
+## Submitting a PR
+
+The shortest path:
+
+1. Fork the repo and create a topic branch.
+2. Run `pnpm install && pnpm test` locally.
+3. Open a draft PR early so we can collaborate on direction.
+4. Mark it ready when the test suite is green and `mp check` is happy on its own diff.
+
+We use **MindPortalix on MindPortalix** — every PR you open will get the same agent thread your users get. Use it as a first reviewer.
+
+## Writing workflows
+
+Good workflows are short, opinionated, and citable. A useful template:
+
+```md
+---
+name: <short, human name>
+applies_to: ["<glob>"]
+severity: advisory | warn | gate
+---
+
+# Why this rule exists
+
+One paragraph of context — what bug, incident, or principle motivated it.
+
+# What good looks like
+
+- A bulleted list, in our team's vocabulary.
+
+# What bad looks like
+
+- The opposite, with a counter-example link if you have one.
+```
+
+Submit new workflows as PRs to `community/workflows/`. We review them weekly and mirror the best ones into the starter pack.
+
+## Building an MCP server
+
+If you've built an MCP server that pairs well with MindPortalix, list it on the [community MCP index](#). We'll cross-link from the integrations page once it's been verified.
+
+## Code of conduct
+
+We follow the **Contributor Covenant**. Be kind, assume good faith, and report anything that crosses a line to `conduct@servmind.io`. Decisions are made by the maintainers in private and communicated transparently.
+        </script>
+
+        <div class="docs-footer">
+          <span>Edit on GitHub · pages/contribute.md</span>
+          <div class="helpful"><span>Was this helpful?</span><button>☺</button><button>◎</button><button>☹</button></div>
+        </div>
+      </main>
+
+      <aside class="docs-toc">
+        <div class="docs-toc-title">▸ On this page</div>
+        <ul id="docs-toc-list"></ul>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script src="../theme.js"></script>
+<script src="docs.js"></script>
+</body>
+</html>

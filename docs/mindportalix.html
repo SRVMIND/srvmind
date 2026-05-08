@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindPortalix — SERVMIND Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="../index.html" class="nav-logo"><span class="glyph"></span><span>SERVMIND</span></a>
+  <div class="nav-links">
+    <a href="../index.html#services">Services</a>
+    <a href="../index.html#products">Products</a>
+    <a href="../blog.html">Blog</a>
+    <a href="index.html" class="active">Docs</a>
+    <a href="../index.html#contact">Contact</a>
+  </div>
+  <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>
+  </button>
+  <a href="getting-started.html" class="btn btn-primary">Quick start →</a>
+</nav>
+
+<div class="docs-shell">
+  <div class="container">
+    <div class="docs-tabs">
+      <a href="index.html"><span class="ico">⌂</span> Home</a>
+      <a href="getting-started.html">Getting Started</a>
+      <a href="mindportalix.html" class="active">MindPortalix</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="contribute.html">Contribute</a>
+    </div>
+
+    <div class="docs-grid">
+      <aside class="docs-side">
+        <div class="group">
+          <div class="group-title">Using MindPortalix</div>
+          <ul>
+            <li><a href="#" class="active">What is MindPortalix?</a></li>
+            <li><a href="#workflows">Workflows</a></li>
+            <li><a href="#agents">Agents</a></li>
+            <li><a href="#mcp-servers">MCP servers</a></li>
+            <li><a href="#triggers">Triggers</a></li>
+            <li><a href="#policy-controls">Policy controls</a></li>
+            <li><a href="#feedback-anatomy">Feedback anatomy</a></li>
+          </ul>
+        </div>
+        <div class="group">
+          <div class="group-title">Self-hosting</div>
+          <ul>
+            <li><a href="#">Architecture</a></li>
+            <li><a href="#">Installation</a></li>
+            <li><a href="#">Upgrades</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="docs-main">
+        <div class="docs-head">
+          <h1>What is MindPortalix?</h1>
+          <button class="docs-ask"><span class="icn"></span> Ask the docs</button>
+        </div>
+
+        <div class="md" id="md-out"></div>
+
+        <script type="text/markdown" id="md-source">
+**MindPortalix** is a portal between your domain experts and your engineering team. Every change a developer makes — commit, branch, or merge — is checked by AI agents against the workflows, references, and MCP-connected tools your domain experts have authored. Feedback arrives inside the editor within seconds.
+
+It's designed to make domain knowledge **operational** — not a doc people forget about, but a live signal that travels with every change.
+
+## Workflows
+
+A **workflow** is a Markdown file that captures a slice of how your team actually works. Workflows live in your repo (or a connected workspace) and look like this:
+
+```md
+---
+name: Refund handling
+applies_to: ["payments/**"]
+severity: warn
+---
+
+When a refund is initiated:
+
+1. Confirm dispute window using `withDisputeWindow()`.
+2. Cap retries at 3 within any 24h window.
+3. Emit a `refund.requested` event before any side effect.
+```
+
+The frontmatter is metadata. The body is plain instructions, in your team's vocabulary.
+
+## Agents
+
+Agents are the readers. Each agent is scoped — it might own one workflow, one MCP server, or one cross-cutting concern (naming, schema drift, security). When a change comes in, the relevant agents reason in parallel and a **synthesizer** ranks and de-dupes their signals.
+
+Common agent types:
+
+- **Domain agents** — own a runbook or workflow file.
+- **Reference agents** — own a body of source material (docs, ADRs, postmortems).
+- **Tool agents** — talk to an MCP server (schema registry, ticketing, observability).
+- **Synthesis agents** — combine signals into the final feedback thread.
+
+## MCP servers
+
+MindPortalix speaks the **Model Context Protocol**. Any MCP server you run — internal docs, schema registry, ticketing, observability — can be plugged in as a tool an agent can query at review time.
+
+```bash
+mp mcp add stripe-policies https://mcp.internal/stripe
+mp mcp add schema-registry https://mcp.internal/schemas
+```
+
+## Triggers
+
+You decide which events deserve a check. Defaults:
+
+| Event       | Default | Latency  |
+| ----------- | ------- | -------- |
+| `commit`    | on      | ~4s      |
+| `branch`    | on      | ~5s      |
+| `merge`     | on      | ~12s     |
+| `pr.draft`  | off     | ~6s      |
+
+Toggle them in your workspace settings or per repo.
+
+## Policy controls
+
+By default, MindPortalix is **advisory** — it posts feedback, never blocks. You can opt in to stricter modes per repo:
+
+- **advisory** (default): comments only.
+- **request-review**: high-severity signals open a review request.
+- **gate**: high-severity signals fail the CI check.
+
+## Feedback anatomy
+
+Every signal in the editor includes:
+
+1. The **agent name** that produced it.
+2. A **severity** — info, warn, gate.
+3. A **body** — what to do, in plain language.
+4. A **citation** — the workflow, file, or MCP response that informed it.
+
+That last part matters. Citations make signals traceable, falsifiable, and easy to update — fix the source and the feedback fixes itself.
+        </script>
+
+        <div class="docs-footer">
+          <span>Edit on GitHub · pages/mindportalix.md</span>
+          <div class="helpful"><span>Was this helpful?</span><button>☺</button><button>◎</button><button>☹</button></div>
+        </div>
+      </main>
+
+      <aside class="docs-toc">
+        <div class="docs-toc-title">▸ On this page</div>
+        <ul id="docs-toc-list"></ul>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script src="../theme.js"></script>
+<script src="docs.js"></script>
+</body>
+</html>

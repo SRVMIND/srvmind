@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindPortalix — by SERVMIND Technologies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ===== Product hero ===== */
+.product-hero {
+  padding: 160px 0 80px;
+  position: relative;
+}
+.product-hero .breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+  margin-bottom: 32px;
+}
+.product-hero .breadcrumb a:hover { color: var(--cyan); }
+.product-hero .breadcrumb .sep { color: var(--fg-mute); }
+
+.product-hero-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 64px;
+  align-items: end;
+}
+.product-hero h1 .grad {
+  background: var(--grad-2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.product-hero p.lede {
+  font-size: 19px;
+  color: var(--fg-dim);
+  max-width: 520px;
+  margin-top: 28px;
+  line-height: 1.55;
+}
+.product-hero .meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.product-hero .meta-cell {
+  padding: 18px 20px;
+  background: rgba(14,18,36,0.6);
+}
+.product-hero .meta-cell .l { font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--fg-mute); letter-spacing:0.16em; text-transform:uppercase; margin-bottom:6px; }
+.product-hero .meta-cell .v { font-family:'Space Grotesk',sans-serif; font-size:18px; }
+
+.product-hero-cta { display:flex; gap:12px; margin-top:36px; flex-wrap:wrap; }
+
+/* ===== Video ===== */
+.video-shell {
+  margin-top: 72px;
+  border-radius: var(--r-xl);
+  border: 1px solid var(--line-2);
+  overflow: hidden;
+  position: relative;
+  background: rgba(14,18,36,0.6);
+}
+.video-shell::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(92,242,255,0.5), transparent 40%, transparent 60%, rgba(181,107,255,0.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.video-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line-2);
+  background: rgba(10,13,28,0.8);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--fg-dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.video-bar .lights { display: flex; gap: 6px; }
+.video-bar .lights span { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); }
+.video-bar .lights span:nth-child(1) { background: #ff5c5c; }
+.video-bar .lights span:nth-child(2) { background: var(--warn); }
+.video-bar .lights span:nth-child(3) { background: var(--lime); }
+.video-bar .right { display:flex; gap:14px; align-items:center; }
+.video-bar .live { display:flex; align-items:center; gap:6px; color:var(--lime); }
+.video-bar .live::before { content:""; width:6px;height:6px;border-radius:50%; background:var(--lime); box-shadow:0 0 8px var(--lime); animation:pulse 1.5s infinite;}
+
+.video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(92,242,255,0.1), transparent 50%),
+    #05060d;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+
+.video-poster { position: absolute; inset: 0; display: grid; place-items: center; }
+.video-poster .grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(120,160,255,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120,160,255,0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+}
+.video-poster .play {
+  position: relative;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: var(--grad-1);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 80px rgba(92,242,255,0.5);
+  transition: transform 0.3s;
+}
+.video-poster:hover .play { transform: scale(1.08); }
+.video-poster .play::before {
+  content: ""; position: absolute; inset: -16px;
+  border-radius: 50%; border: 1px solid rgba(92,242,255,0.4);
+  animation: pingRing 2s ease-out infinite;
+}
+@keyframes pingRing { 0% { transform:scale(0.8); opacity:0.8 } 100% { transform:scale(1.4); opacity:0 } }
+.video-poster .play svg { width: 32px; height: 32px; fill: #05060d; margin-left: 4px; }
+.video-poster .caption {
+  position: absolute;
+  bottom: 28px; left: 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--fg-dim);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.video-poster .caption strong { color: var(--fg); font-weight: 500; }
+.video-poster .corner-tag {
+  position: absolute; top: 28px; right: 28px;
+  padding: 8px 14px;
+  background: rgba(14,18,36,0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--fg-dim);
+  letter-spacing: 0.16em;
+}
+
+/* ===== Problem section ===== */
+.problem {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.problem h2 .grad { background: var(--grad-1); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.problem .body p { color: var(--fg-dim); margin-bottom: 18px; font-size: 17px; }
+
+.gap-vis {
+  position: relative;
+  padding: 28px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  background: rgba(14,18,36,0.5);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  min-height: 320px;
+}
+.gap-card {
+  padding: 18px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-md);
+  background: rgba(10,13,28,0.8);
+}
+.gap-card.expert { border-color: rgba(181,107,255,0.4); }
+.gap-card.dev { border-color: rgba(92,242,255,0.4); }
+.gap-card .role {
+  font-family:'JetBrains Mono',monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--violet);
+  margin-bottom: 12px;
+}
+.gap-card.dev .role { color: var(--cyan); }
+.gap-card h4 { font-family:'Space Grotesk',sans-serif; font-size: 18px; margin-bottom: 10px; }
+.gap-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.gap-card ul li { padding-left: 16px; position: relative; font-size: 13px; color: var(--fg-dim); }
+.gap-card ul li::before { content: "▸"; position: absolute; left: 0; color: var(--violet); }
+.gap-card.dev ul li::before { color: var(--cyan); }
+
+.gap-bridge {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  text-align: center;
+  padding: 14px;
+  background: linear-gradient(90deg, rgba(181,107,255,0.1), rgba(92,242,255,0.1));
+  border: 1px dashed var(--line-2);
+  border-radius: var(--r-md);
+  font-family:'JetBrains Mono',monospace;
+  font-size: 12px;
+  color: var(--fg);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.gap-bridge .grad { background: var(--grad-1); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 600; }
+
+/* ===== Flow / How it works ===== */
+.flow-head { margin-bottom: 56px; max-width: 720px; }
+.flow-head p { color: var(--fg-dim); margin-top: 16px; font-size: 17px; }
+
+.flow {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  padding: 40px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(800px 400px at 50% 50%, rgba(92,242,255,0.08), transparent 70%),
+    rgba(14,18,36,0.4);
+}
+.flow-step {
+  text-align: center;
+  padding: 16px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.flow-step:hover { transform: translateY(-4px); }
+.flow-step .icon-wrap {
+  width: 72px; height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 18px;
+  background: rgba(14,18,36,0.9);
+  border: 1px solid var(--line-2);
+  display: grid;
+  place-items: center;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s;
+}
+.flow-step:hover .icon-wrap { border-color: var(--cyan); box-shadow: var(--shadow-cyan); }
+.flow-step .icon-wrap svg { width: 30px; height: 30px; stroke: var(--cyan); fill: none; stroke-width: 1.5; }
+.flow-step:nth-child(2) .icon-wrap svg { stroke: var(--violet); }
+.flow-step:nth-child(3) .icon-wrap svg { stroke: var(--magenta); }
+.flow-step:nth-child(4) .icon-wrap svg { stroke: var(--violet); }
+.flow-step:nth-child(5) .icon-wrap svg { stroke: var(--lime); }
+.flow-step .num {
+  font-family:'JetBrains Mono',monospace;
+  font-size: 10px;
+  color: var(--fg-mute);
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+.flow-step h4 { font-family:'Space Grotesk',sans-serif; font-size: 16px; margin-bottom: 8px; }
+.flow-step p { font-size: 12px; color: var(--fg-dim); line-height: 1.5; }
+
+.flow-line {
+  position: absolute;
+  top: 76px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--violet), var(--magenta), var(--lime), transparent);
+  opacity: 0.5;
+  z-index: 0;
+}
+.flow-line .pulse {
+  position: absolute;
+  top: -3px; left: 0;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan);
+  animation: flowTravel 4s linear infinite;
+}
+@keyframes flowTravel {
+  0% { left: 0%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+  33% { background: var(--violet); box-shadow: 0 0 12px var(--violet); }
+  66% { background: var(--magenta); box-shadow: 0 0 12px var(--magenta); }
+  100% { left: 100%; background: var(--lime); box-shadow: 0 0 12px var(--lime); }
+}
+
+/* ===== Live demo / interactive ===== */
+.demo-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: rgba(14,18,36,0.6);
+}
+.demo-side {
+  padding: 32px;
+  border-right: 1px solid var(--line-2);
+  display: flex;
+  flex-direction: column;
+}
+.demo-side:last-child { border-right: none; }
+
+.demo-side h3 { margin-bottom: 8px; }
+.demo-side .role-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-family:'JetBrains Mono',monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  color: var(--cyan);
+  background: rgba(92,242,255,0.05);
+}
+.demo-side .role-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+.demo-side.right .role-pill { color: var(--violet); background: rgba(181,107,255,0.05); }
+.demo-side.right .role-pill .dot { background: var(--violet); box-shadow: 0 0 6px var(--violet); }
+
+/* Code block */
+.code-block {
+  margin-top: 18px;
+  background: #05060d;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  font-family:'JetBrains Mono',monospace;
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+.code-block .ch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: rgba(14,18,36,0.6);
+  border-bottom: 1px solid var(--line-2);
+  font-size: 11px;
+  color: var(--fg-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.code-block .ch .branch { color: var(--cyan); }
+.code-block pre {
+  padding: 16px;
+  margin: 0;
+  overflow-x: auto;
+  color: var(--fg);
+}
+.code-block .ln { color: var(--fg-mute); margin-right: 14px; user-select: none; }
+.code-block .kw { color: #b56bff; }
+.code-block .fn { color: var(--cyan); }
+.code-block .str { color: var(--lime); }
+.code-block .cm { color: var(--fg-mute); font-style: italic; }
+.code-block .add { background: rgba(198,255,92,0.08); display:inline-block; width:100%; padding-left: 4px; }
+.code-block .del { background: rgba(255,92,92,0.08); display:inline-block; width:100%; padding-left: 4px; color: #ff8888; text-decoration: line-through; }
+
+.demo-controls { display:flex; gap: 8px; margin-top: 18px; flex-wrap:wrap; }
+.demo-controls .chip {
+  padding: 6px 12px;
+  font-family:'JetBrains Mono',monospace;
+  font-size: 11px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: rgba(14,18,36,0.6);
+  color: var(--fg-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.demo-controls .chip:hover { border-color: var(--cyan); color: var(--cyan); }
+.demo-controls .chip.active { border-color: var(--cyan); color: var(--cyan); background: rgba(92,242,255,0.08); }
+
+/* Agent feedback panel (right) */
+.agent-thread {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.agent-msg {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(10,13,28,0.6);
+  border: 1px solid var(--line-2);
+  font-size: 13px;
+}
+.agent-msg .head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size: 10px;
+  color: var(--fg-mute);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.agent-msg .agent-name { color: var(--violet); display:flex; align-items:center; gap: 6px;}
+.agent-msg .agent-name::before { content:""; width:6px; height:6px; border-radius:50%; background: var(--violet); box-shadow: 0 0 6px var(--violet); }
+.agent-msg .severity { padding: 2px 8px; border-radius: 4px; }
+.agent-msg .severity.warn { color: var(--warn); background: rgba(255,180,92,0.1); }
+.agent-msg .severity.info { color: var(--cyan); background: rgba(92,242,255,0.1); }
+.agent-msg .severity.ok { color: var(--lime); background: rgba(198,255,92,0.1); }
+.agent-msg .body { color: var(--fg); line-height: 1.55; }
+.agent-msg .body code { font-family:'JetBrains Mono',monospace; background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 4px; font-size: 11.5px; color: var(--cyan); }
+.agent-msg .ref {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: rgba(255,255,255,0.02);
+  border-left: 2px solid var(--violet);
+  font-size: 11.5px;
+  color: var(--fg-dim);
+}
+.agent-msg .ref .src { font-family:'JetBrains Mono',monospace; font-size: 10px; color: var(--violet); margin-bottom: 2px; }
+
+/* ===== Features grid ===== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.feature {
+  padding: 28px;
+  background: rgba(14,18,36,0.5);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  transition: all 0.3s;
+}
+.feature:hover { border-color: var(--cyan); transform: translateY(-2px); }
+.feature .icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: rgba(92,242,255,0.08);
+  border: 1px solid var(--line-2);
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+}
+.feature .icon svg { width: 22px; height: 22px; stroke: var(--cyan); fill: none; stroke-width: 1.5; }
+.feature h4 { font-family:'Space Grotesk',sans-serif; font-size: 18px; margin-bottom: 8px; }
+.feature p { color: var(--fg-dim); font-size: 14px; line-height: 1.55; }
+
+/* ===== Integrations ===== */
+.integrations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+.integration {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: rgba(14,18,36,0.6);
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--fg-dim);
+  transition: all 0.2s;
+}
+.integration:hover { border-color: var(--cyan); color: var(--fg); }
+.integration .ico { width: 22px; height: 22px; border-radius: 6px; background: rgba(92,242,255,0.1); display:grid; place-items:center; }
+.integration .ico svg { width: 13px; height: 13px; stroke: var(--cyan); fill: none; stroke-width: 1.5; }
+
+/* ===== Pricing ===== */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.price-card {
+  padding: 32px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-lg);
+  background: rgba(14,18,36,0.5);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.price-card.featured {
+  border-color: var(--violet);
+  background: linear-gradient(180deg, rgba(181,107,255,0.08), rgba(14,18,36,0.5));
+  box-shadow: var(--shadow-violet);
+}
+.price-card .plan-name { font-family:'Space Grotesk',sans-serif; font-size: 20px; margin-bottom: 4px; }
+.price-card .plan-desc { color: var(--fg-dim); font-size: 13px; margin-bottom: 24px; }
+.price-card .price { font-family:'Space Grotesk',sans-serif; font-size: 44px; letter-spacing: -0.02em; margin-bottom: 4px; }
+.price-card .price .per { font-size: 14px; color: var(--fg-dim); }
+.price-card .featured-tag {
+  position: absolute; top: -12px; right: 24px;
+  padding: 4px 10px;
+  background: var(--grad-2);
+  color: #05060d;
+  font-family:'JetBrains Mono',monospace;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 999px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.price-card ul { list-style:none; display:flex; flex-direction:column; gap: 10px; margin: 24px 0; flex: 1; }
+.price-card ul li { font-size: 13px; color: var(--fg-dim); padding-left: 22px; position: relative; }
+.price-card ul li::before {
+  content: ""; position: absolute; left: 0; top: 6px;
+  width: 14px; height: 7px;
+  border-left: 1.5px solid var(--cyan);
+  border-bottom: 1.5px solid var(--cyan);
+  transform: rotate(-45deg);
+}
+
+/* ===== FAQ ===== */
+.faq-list { display:flex; flex-direction:column; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+.faq-item { background: rgba(14,18,36,0.6); }
+.faq-q {
+  padding: 22px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-family:'Space Grotesk',sans-serif;
+  font-size: 18px;
+  transition: background 0.2s;
+}
+.faq-q:hover { background: rgba(20,26,49,0.8); }
+.faq-q .plus {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  display: grid;
+  place-items: center;
+  color: var(--cyan);
+  font-size: 18px;
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.faq-item.open .faq-q .plus { transform: rotate(45deg); border-color: var(--cyan); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding: 0 28px;
+  color: var(--fg-dim);
+}
+.faq-item.open .faq-a { max-height: 240px; padding: 0 28px 24px; }
+
+@media (max-width: 980px) {
+  .product-hero-grid { grid-template-columns: 1fr; }
+  .problem { grid-template-columns: 1fr; gap: 40px; }
+  .flow { grid-template-columns: 1fr 1fr; }
+  .flow-line { display: none; }
+  .demo-card { grid-template-columns: 1fr; }
+  .demo-side { border-right: none; border-bottom: 1px solid var(--line-2); }
+  .features-grid, .pricing-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <span class="glyph"></span>
+    <span>SERVMIND</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html#services">Services</a>
+    <a href="index.html#products" class="active">Products</a>
+    <a href="index.html#approach">Approach</a>
+    <a href="blog.html">Blog</a>
+    <a href="docs/index.html">Docs</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+    <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg>
+  </button>
+  <a href="#demo" class="btn btn-primary">▶ Watch demo</a>
+</nav>
+<script src="theme.js"></script>
+
+<!-- ============ Product hero ============ -->
+<section class="product-hero" data-screen-label="01 Product hero">
+  <div class="container">
+    <div class="breadcrumb fade-in">
+      <a href="index.html">SERVMIND</a>
+      <span class="sep">/</span>
+      <a href="index.html#products">Products</a>
+      <span class="sep">/</span>
+      <span style="color:var(--fg);">MindPortalix</span>
+    </div>
+
+    <div class="product-hero-grid">
+      <div>
+        <div class="hero-eyebrow fade-in" style="margin-bottom:24px;">
+          <span class="badge" style="background:var(--grad-2);">PRODUCT</span>
+          <span>MindPortalix · Domain-aligned engineering</span>
+        </div>
+        <h1 class="fade-in">
+          Where <span class="grad">domain expertise</span><br>
+          meets every commit.
+        </h1>
+        <p class="lede fade-in">
+          MindPortalix listens to what your developers ship — every commit, branch and merge — and runs it past the people who actually own the domain. AI agents check each change against your team's documented best practices, workflows, references and MCP-connected tools, then return aligned, contextual feedback right inside VS Code.
+        </p>
+        <div class="product-hero-cta fade-in">
+          <a href="#demo" class="btn btn-grad">▶ Watch the 90s demo</a>
+          <a href="#flow" class="btn btn-ghost">See how it works</a>
+          <a href="#install" class="btn btn-ghost">Install extension</a>
+        </div>
+      </div>
+
+      <div class="meta fade-in">
+        <div class="meta-cell"><div class="l">Surface</div><div class="v">VS Code · Cursor</div></div>
+        <div class="meta-cell"><div class="l">Triggered on</div><div class="v">Commit · Branch · Merge</div></div>
+        <div class="meta-cell"><div class="l">Knowledge sources</div><div class="v">Files · MCP · Workflows</div></div>
+        <div class="meta-cell"><div class="l">Avg feedback time</div><div class="v">~ 4.2 sec</div></div>
+        <div class="meta-cell"><div class="l">Status</div><div class="v" style="color:var(--lime);">● Live · v1.4</div></div>
+        <div class="meta-cell"><div class="l">Tier</div><div class="v">Beta open</div></div>
+      </div>
+    </div>
+
+    <!-- ============ Video ============ -->
+    <div id="demo" class="video-shell fade-in">
+      <div class="video-bar">
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div class="lights"><span></span><span></span><span></span></div>
+          <span>mindportalix · demo · 90s walkthrough</span>
+        </div>
+        <div class="right">
+          <span>1080p · stereo</span>
+          <span class="live">LIVE PRODUCT</span>
+        </div>
+      </div>
+      <div class="video-frame" id="videoFrame" data-video-id="dQw4w9WgXcQ">
+        <div class="video-poster" id="videoPoster">
+          <div class="grid-bg"></div>
+          <div class="play">
+            <svg viewBox="0 0 24 24"><path d="M5 3v18l16-9z"/></svg>
+          </div>
+          <div class="caption">
+            <div style="margin-bottom:6px; color:var(--fg-mute);">▸ press to start</div>
+            <strong>How MindPortalix turns expert knowledge into agent feedback</strong>
+          </div>
+          <div class="corner-tag">YOUTUBE · 1:32</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Problem / The gap ============ -->
+<section data-screen-label="02 The gap">
+  <div class="container">
+    <div class="problem">
+      <div class="body fade-in">
+        <span class="section-tag"><span class="dot"></span> The gap we're closing</span>
+        <h2>Domain experts know <span class="grad">why</span>.<br>Developers know <span class="grad">how</span>.<br>The handoff is where things break.</h2>
+        <div style="margin-top:32px;">
+          <p>Your domain experts hold years of context — vocabulary, edge cases, regulatory nuance, the unwritten "we don't do it that way" rules. Your developers hold the technical chops to translate that into systems.</p>
+          <p>Between them sits a long, lossy chain of tickets, calls, and tribal knowledge. Decisions slip. Best practices age. Reviews catch the mistakes you happened to think of.</p>
+          <p style="color: var(--fg);">MindPortalix is the always-on portal between the two — so the next commit is read, in real time, against the expertise that should be guiding it.</p>
+        </div>
+      </div>
+
+      <div class="gap-vis fade-in">
+        <div class="gap-card expert">
+          <div class="role">Domain expert</div>
+          <h4>Owns the why</h4>
+          <ul>
+            <li>Workflows and runbooks</li>
+            <li>Reference documents</li>
+            <li>Connected tools (MCP)</li>
+            <li>Edge cases &amp; regulations</li>
+            <li>"How we actually work"</li>
+          </ul>
+        </div>
+        <div class="gap-card dev">
+          <div class="role">Developer</div>
+          <h4>Owns the how</h4>
+          <ul>
+            <li>Codebase &amp; architecture</li>
+            <li>Tests, CI, releases</li>
+            <li>Implementation choices</li>
+            <li>Refactors &amp; merges</li>
+            <li>Speed of delivery</li>
+          </ul>
+        </div>
+        <div class="gap-bridge">
+          ◂ MindPortalix · the <span class="grad">live portal</span> between them ▸
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ How it works (flow) ============ -->
+<section id="flow" data-screen-label="03 How it works">
+  <div class="container">
+    <div class="flow-head fade-in">
+      <span class="section-tag"><span class="dot"></span> How it works</span>
+      <h2>Five steps. Four seconds.</h2>
+      <p>MindPortalix sits inside the editor your team already uses. It picks up every change, runs it through a fleet of domain-aware agents, and replies before the developer's coffee gets cold.</p>
+    </div>
+
+    <div class="flow fade-in">
+      <div class="flow-line"><div class="pulse"></div></div>
+
+      <div class="flow-step">
+        <div class="num">01 / DETECT</div>
+        <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M6 3v12a3 3 0 0 0 3 3h0a3 3 0 0 0 3-3V9a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v12"/><circle cx="6" cy="3" r="2"/><circle cx="18" cy="21" r="2"/></svg></div>
+        <h4>Commit detected</h4>
+        <p>VS Code extension watches for commits, branch creates, and merges.</p>
+      </div>
+      <div class="flow-step">
+        <div class="num">02 / TRANSMIT</div>
+        <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M2 12h20M16 6l6 6-6 6M8 18l-6-6 6-6"/></svg></div>
+        <h4>Sent to portal</h4>
+        <p>Diff, branch and metadata stream to MindPortalix securely.</p>
+      </div>
+      <div class="flow-step">
+        <div class="num">03 / EVALUATE</div>
+        <div class="icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3"/></svg></div>
+        <h4>Agents reason</h4>
+        <p>Domain agents check the change against workflows, MCP tools, and references.</p>
+      </div>
+      <div class="flow-step">
+        <div class="num">04 / SYNTHESIZE</div>
+        <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h16"/><circle cx="20" cy="12" r="2"/></svg></div>
+        <h4>Feedback drafted</h4>
+        <p>A reviewer agent synthesizes, ranks, and links to source material.</p>
+      </div>
+      <div class="flow-step">
+        <div class="num">05 / DELIVER</div>
+        <div class="icon-wrap"><svg viewBox="0 0 24 24"><path d="M3 12l5 5 13-13"/></svg></div>
+        <h4>Inline in editor</h4>
+        <p>Developer sees aligned, contextual feedback in VS Code — within seconds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Live demo ============ -->
+<section data-screen-label="04 Live demo">
+  <div class="container">
+    <div class="services-head fade-in">
+      <div>
+        <span class="section-tag"><span class="dot"></span> A worked example</span>
+        <h2>From a routine commit<br>to a precise, sourced reply.</h2>
+      </div>
+      <p>Pick a scenario. Watch what arrives in the editor.</p>
+    </div>
+
+    <div class="demo-card fade-in">
+      <!-- LEFT: developer side -->
+      <div class="demo-side left">
+        <span class="role-pill"><span class="dot"></span> Developer · VS Code</span>
+        <h3>commit · feat: relax retry limits</h3>
+        <p style="color:var(--fg-dim); font-size:14px;">Sarah opens a PR on the payments service. The diff looks small.</p>
+
+        <div class="demo-controls">
+          <button class="chip active" data-scenario="retries">retry-limits</button>
+          <button class="chip" data-scenario="naming">domain-naming</button>
+          <button class="chip" data-scenario="schema">schema-change</button>
+        </div>
+
+        <div class="code-block" id="codeBlock">
+          <div class="ch">
+            <span><span class="branch">feat/relax-retry-limits</span> · payments-service/retry.ts</span>
+            <span>+3 −1</span>
+          </div>
+          <pre id="codeContent"></pre>
+        </div>
+      </div>
+
+      <!-- RIGHT: portal feedback -->
+      <div class="demo-side right">
+        <span class="role-pill"><span class="dot"></span> MindPortalix · agent thread</span>
+        <h3>3 signals from your domain knowledge</h3>
+        <p style="color:var(--fg-dim); font-size:14px;">Generated from <strong style="color:var(--fg)">payments-runbook.md</strong>, MCP <strong style="color:var(--fg)">stripe-policies</strong>, and workflow <strong style="color:var(--fg)">refund-handling</strong>.</p>
+
+        <div class="agent-thread" id="agentThread"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Features ============ -->
+<section data-screen-label="05 Features">
+  <div class="container">
+    <div class="services-head fade-in">
+      <div>
+        <span class="section-tag"><span class="dot"></span> Features</span>
+        <h2>Everything you need to make<br>every change a domain-aware change.</h2>
+      </div>
+      <p>Designed for teams who are tired of rediscovering the same lessons.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature fade-in">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <h4>Native VS Code &amp; Cursor extension</h4>
+        <p>Inline diagnostics, hover cards, side-panel threads, codelens actions — all native.</p>
+      </div>
+      <div class="feature fade-in">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="6" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="18" r="1.5"/></svg></div>
+        <h4>Workflow capture, not prompt-tuning</h4>
+        <p>Domain experts upload runbooks, decisions, files. No prompt engineering required.</p>
+      </div>
+      <div class="feature fade-in">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/><path d="M10 7h4M7 10v4M17 10v4M10 17h4"/></svg></div>
+        <h4>MCP tool integration</h4>
+        <p>Plug in any MCP server — internal docs, ticketing, observability, custom APIs.</p>
+      </div>
+      <div class="feature fade-in">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h4>Triggers on every signal</h4>
+        <p>Commits, branches, merges, draft PRs. You decide which events deserve a check.</p>
+      </div>
+      <div class="feature fade-in">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 12l4 4L21 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <h4>Sourced, citable feedback</h4>
+        <p>Every signal links back to the workflow, file, or MCP tool that informed it.</p>
+      </div>
+      <div class="feature fade-in">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 21V11l8-7 8 7v10"/><path d="M9 21v-7h6v7"/></svg></div>
+        <h4>Self-hosted available</h4>
+        <p>Cloud, single-tenant, or on-prem. Your domain knowledge stays where you want it.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:64px; margin-bottom:8px;">Works with the tools you already use</h3>
+    <p style="color:var(--fg-dim);">Lightweight integrations across the developer and expert sides.</p>
+    <div class="integrations">
+      <div class="integration"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/></svg></div> VS Code</div>
+      <div class="integration"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg></div> Cursor</div>
+      <div class="integration"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg></div> GitHub</div>
+      <div class="integration"><div class="ico"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/></svg></div> GitLab</div>
+      <div class="integration"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9-9 9z"/></svg></div> Linear</div>
+      <div class="integration"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg></div> Notion</div>
+      <div class="integration"><div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></svg></div> Confluence</div>
+      <div class="integration"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 12h16M12 4v16"/></svg></div> Slack</div>
+      <div class="integration"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/></svg></div> Any MCP server</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Pricing ============ -->
+<section id="install" data-screen-label="06 Pricing">
+  <div class="container">
+    <div class="services-head fade-in">
+      <div>
+        <span class="section-tag"><span class="dot"></span> Plans</span>
+        <h2>Start small. Scale as<br>your domain knowledge grows.</h2>
+      </div>
+      <p>All plans include the VS Code extension, agent runtime, and MCP support.</p>
+    </div>
+
+    <div class="pricing-grid fade-in">
+      <div class="price-card">
+        <div class="plan-name">Solo</div>
+        <div class="plan-desc">For independent experts and small teams.</div>
+        <div class="price">$0<span class="per"> /month</span></div>
+        <span class="mono">Up to 1 expert · 3 developers</span>
+        <ul>
+          <li>VS Code &amp; Cursor extension</li>
+          <li>1 workflow · 25 source files</li>
+          <li>Commit + branch triggers</li>
+          <li>Hosted by SERVMIND</li>
+        </ul>
+        <a href="#" class="btn btn-ghost">Start free</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="featured-tag">Most teams pick this</div>
+        <div class="plan-name">Team</div>
+        <div class="plan-desc">For product orgs with real domain depth.</div>
+        <div class="price">$29<span class="per"> /seat / month</span></div>
+        <span class="mono">Up to 25 seats · unlimited experts</span>
+        <ul>
+          <li>Everything in Solo</li>
+          <li>Unlimited workflows &amp; sources</li>
+          <li>Merge + custom event triggers</li>
+          <li>MCP server connections</li>
+          <li>SSO, audit logs, RBAC</li>
+        </ul>
+        <a href="#" class="btn btn-grad">Start a Team trial</a>
+      </div>
+
+      <div class="price-card">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-desc">For regulated, scaled, or self-hosted teams.</div>
+        <div class="price">Custom</div>
+        <span class="mono">Volume · self-hosted · bespoke</span>
+        <ul>
+          <li>Everything in Team</li>
+          <li>Single-tenant or on-prem</li>
+          <li>Dedicated agent training</li>
+          <li>Domain consulting hours</li>
+          <li>SLA &amp; security review</li>
+        </ul>
+        <a href="#" class="btn btn-ghost">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section data-screen-label="07 FAQ">
+  <div class="container" style="max-width: 920px;">
+    <div class="services-head fade-in" style="display:block;">
+      <span class="section-tag"><span class="dot"></span> FAQ</span>
+      <h2>Common questions.</h2>
+    </div>
+
+    <div class="faq-list fade-in">
+      <div class="faq-item">
+        <div class="faq-q">Does MindPortalix read my source code?<span class="plus">+</span></div>
+        <div class="faq-a"><p style="padding-top:8px;">Only the diff and metadata of the change you commit. Full repo access is opt-in, scoped per repository, and never used for training.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do domain experts onboard their knowledge?<span class="plus">+</span></div>
+        <div class="faq-a"><p style="padding-top:8px;">Through a simple workspace UI: drag in files, write workflows in plain language, connect MCP servers. No prompt engineering, no embeddings to manage.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Which models do the agents use?<span class="plus">+</span></div>
+        <div class="faq-a"><p style="padding-top:8px;">A mix — frontier models for synthesis, smaller fast models for triage. You can pin model providers per workspace, including Bedrock, Azure OpenAI, or self-hosted.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can it block bad merges?<span class="plus">+</span></div>
+        <div class="faq-a"><p style="padding-top:8px;">Yes — optional. You can configure severity thresholds that fail CI, request human review, or just post advisory comments. Defaults are advisory only.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What's the latency on feedback?<span class="plus">+</span></div>
+        <div class="faq-a"><p style="padding-top:8px;">Typical end-to-end is under 5 seconds for commits, 15s for full merges. Heavy MCP tool calls extend that proportionally.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Big CTA ============ -->
+<section>
+  <div class="container">
+    <div class="bigcta fade-in">
+      <span class="section-tag"><span class="dot"></span> Ready to install</span>
+      <h2>Put your domain experts<br>inside every commit.</h2>
+      <p>Spin up a workspace, drop in your first workflow, and install the extension. You'll see your first agent reply on the next commit.</p>
+      <div class="cta-row">
+        <a href="#" class="btn btn-grad">Install MindPortalix →</a>
+        <a href="index.html" class="btn btn-ghost">Back to SERVMIND</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="nav-logo" style="margin-bottom:14px;display:inline-flex;">
+          <span class="glyph"></span>
+          <span>SERVMIND TECHNOLOGIES</span>
+        </a>
+        <p style="color:var(--fg-dim); max-width:360px; margin-top:8px; font-size:14px;">
+          Building software systems and AI agents that carry domain expertise into engineering — without losing it in translation.
+        </p>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li><a href="mindportalix.html">MindPortalix</a></li>
+          <li><a href="#">SignalDesk <span class="kbd">soon</span></a></li>
+          <li><a href="#">FieldLoop <span class="kbd">soon</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#approach">Approach</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:hello@servmind.io">hello@servmind.io</a></li>
+          <li><a href="#">GitHub</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© 2026 SERVMIND TECHNOLOGIES · MindPortalix v1.4 · build 2026.05.08</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px; color:var(--lime);">● all systems operational</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== Reveal on scroll =====
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+fadeEls.forEach(el => observer.observe(el));
+setTimeout(() => fadeEls.forEach(el => el.classList.add('visible')), 250);
+
+// ===== Video play =====
+const videoFrame = document.getElementById('videoFrame');
+const videoPoster = document.getElementById('videoPoster');
+videoFrame.addEventListener('click', () => {
+  const id = videoFrame.dataset.videoId;
+  videoPoster.style.display = 'none';
+  const iframe = document.createElement('iframe');
+  iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+  iframe.allowFullscreen = true;
+  videoFrame.appendChild(iframe);
+});
+
+// ===== Scenario switcher =====
+const scenarios = {
+  retries: {
+    code: [
+      {ln: '14', cls: '', text: '<span class="kw">async function</span> <span class="fn">attemptCharge</span>(payment) {'},
+      {ln: '15', cls: '', text: '  <span class="kw">const</span> result = <span class="kw">await</span> stripe.charge(payment);'},
+      {ln: '16', cls: 'del', text: '  <span class="kw">const</span> maxRetries = <span class="str">3</span>;'},
+      {ln: '16', cls: 'add', text: '  <span class="kw">const</span> maxRetries = <span class="str">10</span>; <span class="cm">// be more lenient</span>'},
+      {ln: '17', cls: '', text: '  <span class="kw">if</span> (!result.ok) {'},
+      {ln: '18', cls: 'add', text: '    <span class="kw">return</span> <span class="fn">retryWithBackoff</span>(payment, maxRetries);'},
+      {ln: '19', cls: '', text: '  }'},
+      {ln: '20', cls: '', text: '}'}
+    ],
+    branch: 'feat/relax-retry-limits',
+    file: 'payments-service/retry.ts',
+    title: 'commit · feat: relax retry limits',
+    devNote: 'Sarah opens a PR on the payments service. The diff looks small.',
+    msgs: [
+      {agent: 'Payments-Domain Agent', sev:'warn', sevLabel:'POLICY · WARN', body: 'Raising <code>maxRetries</code> from 3 to 10 violates our refund window policy. Customers can be charged repeatedly within the 24h dispute window if upstream returns soft failures.', ref: {src: 'payments-runbook.md · §4 Retry policy', text: '"Hard cap retries at 3 within any 24h window for card-not-present transactions."'}},
+      {agent: 'Stripe-MCP Agent', sev:'info', sevLabel:'CONTEXT', body: 'Stripe rate-limits the same idempotency key after 5 attempts in a row. Going to 10 will start returning <code>429 too_many_requests</code>.', ref: {src: 'MCP · stripe-policies / retry-limits', text: '"For card_payment_intent, recommended max attempts: 3."'}},
+      {agent: 'Refund-Workflow Agent', sev:'ok', sevLabel:'SUGGESTED FIX', body: 'Wrap retries in <code>withDisputeWindow()</code> and cap at 3. The helper is already in <code>payments-service/policy.ts</code> and matches the documented runbook.', ref: {src: 'workflow · refund-handling / step 2', text: 'Always confirm dispute window before any retry beyond first attempt.'}}
+    ]
+  },
+  naming: {
+    code: [
+      {ln: '8', cls: '', text: '<span class="kw">export interface</span> <span class="fn">PolicyHolder</span> {'},
+      {ln: '9', cls: 'del', text: '  customerId: <span class="kw">string</span>;'},
+      {ln: '9', cls: 'add', text: '  insuredId: <span class="kw">string</span>;'},
+      {ln: '10', cls: '', text: '  policyNumber: <span class="kw">string</span>;'},
+      {ln: '11', cls: 'add', text: '  beneficiaries: Beneficiary[];'},
+      {ln: '12', cls: '', text: '  createdAt: <span class="kw">Date</span>;'},
+      {ln: '13', cls: '', text: '}'}
+    ],
+    branch: 'feat/policyholder-domain',
+    file: 'core/types/policy.ts',
+    title: 'commit · feat: align policy holder model',
+    devNote: 'Diego renames a field on the PolicyHolder type to match an internal doc.',
+    msgs: [
+      {agent: 'Insurance-Domain Agent', sev:'info', sevLabel:'NAMING · MATCH', body: 'Renaming <code>customerId</code> → <code>insuredId</code> matches the canonical glossary. Good move.', ref: {src: 'glossary.md · Insured vs Customer', text: '"In this codebase, the entity covered by a policy is always called the Insured, never Customer."'}},
+      {agent: 'Schema-Drift Agent', sev:'warn', sevLabel:'BREAKING · WARN', body: '7 downstream services still send <code>customerId</code> on the policy event. Renaming the type without a backwards-compatible field will break <code>claims-svc</code> and <code>billing-svc</code>.', ref: {src: 'MCP · schema-registry / policy.created', text: 'Producers: claims-svc@v3, billing-svc@v8, audit-svc@v2 · last updated 11 days ago.'}},
+      {agent: 'Migration-Workflow Agent', sev:'ok', sevLabel:'SUGGESTED FIX', body: 'Add <code>customerId</code> as a deprecated alias for one release, register a v2 policy event, and follow the documented dual-write migration.', ref: {src: 'workflow · field-rename / dual-write', text: 'Step 1: alias old field. Step 2: emit v2 event. Step 3: deprecate after 2 releases.'}}
+    ]
+  },
+  schema: {
+    code: [
+      {ln: '22', cls: '', text: '<span class="kw">CREATE TABLE</span> orders ('},
+      {ln: '23', cls: '', text: '  id <span class="kw">UUID PRIMARY KEY</span>,'},
+      {ln: '24', cls: '', text: '  customer_id <span class="kw">UUID</span>,'},
+      {ln: '25', cls: 'del', text: '  total_cents <span class="kw">INTEGER NOT NULL</span>,'},
+      {ln: '25', cls: 'add', text: '  total <span class="kw">DECIMAL</span>(<span class="str">10,2</span>) <span class="kw">NOT NULL</span>,'},
+      {ln: '26', cls: 'add', text: '  currency <span class="kw">VARCHAR</span>(<span class="str">3</span>),'},
+      {ln: '27', cls: '', text: '  created_at <span class="kw">TIMESTAMPTZ</span> <span class="kw">DEFAULT NOW</span>()'},
+      {ln: '28', cls: '', text: ');'}
+    ],
+    branch: 'feat/orders-decimal-total',
+    file: 'db/migrations/0142_orders.sql',
+    title: 'commit · feat: switch order total to DECIMAL',
+    devNote: 'Marcus rewrites the orders table to store totals as DECIMAL.',
+    msgs: [
+      {agent: 'Money-Domain Agent', sev:'warn', sevLabel:'PRECISION · WARN', body: 'Switching from <code>INTEGER cents</code> to <code>DECIMAL(10,2)</code> reverses our documented Money-as-integer policy. Float-style rounding has bitten us twice already (see incidents).', ref: {src: 'finance-handbook.md · §2 Money representation', text: '"All monetary values stored as integer minor units. No DECIMAL. No FLOAT."'}},
+      {agent: 'Audit-Trail Agent', sev:'info', sevLabel:'COMPLIANCE', body: 'Auditors flagged this exact change in 2024. Adding <code>currency</code> alone is fine; changing the storage type requires a finance-board approval per our SOX runbook.', ref: {src: 'workflow · sox-controls / schema-change', text: 'Schema changes touching monetary fields require finance + audit sign-off before merge.'}},
+      {agent: 'Migration-Strategy Agent', sev:'ok', sevLabel:'SUGGESTED FIX', body: 'Keep <code>total_cents INTEGER</code>. Add a <code>currency</code> column. Build presentation logic, not storage logic, around DECIMAL formatting.', ref: {src: 'incident · 2024-11-04 / rounding-drift', text: 'Postmortem reaffirmed integer-only storage for amounts.'}}
+    ]
+  }
+};
+
+const codeContent = document.getElementById('codeContent');
+const agentThread = document.getElementById('agentThread');
+const codeChip = document.querySelector('#codeBlock .ch');
+const titleEl = document.querySelector('.demo-side.left h3');
+const devNoteEl = document.querySelector('.demo-side.left p');
+
+function renderScenario(key) {
+  const s = scenarios[key];
+  // code
+  codeContent.innerHTML = s.code.map(line => {
+    return `<span class="${line.cls}"><span class="ln">${line.ln}</span>${line.text}</span>`;
+  }).join('\n');
+  // chrome
+  codeChip.innerHTML = `<span><span class="branch">${s.branch}</span> · ${s.file}</span><span>+${s.code.filter(l=>l.cls==='add').length} −${s.code.filter(l=>l.cls==='del').length}</span>`;
+  titleEl.textContent = s.title;
+  devNoteEl.textContent = s.devNote;
+  // thread
+  agentThread.innerHTML = s.msgs.map(m => `
+    <div class="agent-msg">
+      <div class="head">
+        <span class="agent-name">${m.agent}</span>
+        <span class="severity ${m.sev}">${m.sevLabel}</span>
+      </div>
+      <div class="body">${m.body}</div>
+      <div class="ref"><div class="src">↳ ${m.ref.src}</div>${m.ref.text}</div>
+    </div>
+  `).join('');
+}
+
+renderScenario('retries');
+
+document.querySelectorAll('.demo-controls .chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.demo-controls .chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    renderScenario(chip.dataset.scenario);
+  });
+});
+
+// ===== FAQ accordion =====
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+});
+</script>
+
+</body>
+</html>
